@@ -1,17 +1,30 @@
+#version name
 version: "3"
 services:
+  #service name
   web:
+    #image to be pulled 
     image: joryallmacmillan/docker-tutorial:part2
+    # deploy specifications
     deploy:
+      # Number of containers to be created within the service
       replicas: 10
+      # resource specifications 
       resources:
+        # resource usage limits
         limits:
+          # percentage of the CPU of the host for each container to use
           cpus: "0.1"
+          # memory each container can consume at most
           memory: 50M
+      # self-healing specifications
       restart_policy:
+        # when a container fails, restart it
         condition: on-failure
+    # Port on the host machine:port on {{service name}}
     ports:
       - "4000:80"
+    # Load balanced network for containers to communicate with. 
     networks:
       - webnet
 networks:
